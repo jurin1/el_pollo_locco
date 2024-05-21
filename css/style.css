@@ -1,0 +1,158 @@
+@font-face {
+    font-family: 'magic';
+    src: url('../fonts/Starborn.otf') format('opentype');
+}
+
+
+
+html {
+    font-family: 'magic';
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(../img/style/game_background.jpg);
+    background-size: cover;
+    overflow-y: hidden;
+}
+
+
+
+.dnone {
+    display: none !important;
+}
+
+.btnStyle {
+    padding: 5px 10px;
+    width: 110px;
+    height: 40px;
+    background-color: #FF9601;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: 'magic';
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.btnStyle:hover {
+    background-color: #e88904;
+    transform: scale(1.1);
+}
+
+.closeBtnStyle {
+    background-image: url(../img/control/close.png);
+    border: none;
+    background-color: #FF9601;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.closeBtnStyle:hover {
+    transform: scale(1.1);
+}
+
+#gameScreen {
+    position: relative;
+    height: 480px;
+    width: 720px;
+}
+
+.infoWindowStyle {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rotateImgStyle {
+    animation: rotate 3s infinite;
+    display: none;
+    width: 128px;
+    height: 128px;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(-47deg);
+    }
+
+    50% {
+        transform: rotate(47deg);
+    }
+
+    100% {
+        transform: rotate(-47deg);
+    }
+}
+
+.headline {
+    text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+/* === LICENSE-WINDOW === */
+
+.attributeBtn {
+    width: fit-content;
+    margin-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#linkMainContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.linkWindow {
+    width: 550px;
+    height: auto;
+    padding: 20px;
+    background-color: #FF9601;
+    display: flex;
+    border-radius: 10px;
+    justify-content: center;
+    position: relative;
+}
+
+.linkWindow>ul {
+    margin: 0;
+}
+
+.linkWindow>ul>li {
+    color: white;
+}
+
+.attributeLinkStyle {
+    color: white;
+    text-decoration: none;
+    height: max-content;
+}
+
+.attributeLinkStyle:hover {
+    text-decoration: underline;
+}
+
+
+

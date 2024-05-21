@@ -6,14 +6,13 @@ let imageLoaded = 0;
 let percent = 0;
 let gameStarted = false;
 let intervalIds = [];
-let fullScreenEnabled = false;
+let fullScreenEnabled;
 const audioManager = new AudioManager();
 
 
 
 
 async function loadGame(newStart) {
-    loadSettings();
     if (newStart) resetGame();
     await generateHTML();
     // audioManager.playAudio('gameSound');
@@ -37,8 +36,8 @@ async function generateHTML() {
 function startGame() {
     toggleDisplay('canvasContainer', 'remove');
     gameStarted = true;
-    toggleDisplay('starScreen', 'add')
-    pauseGame()
+    toggleDisplay('startScreen', 'add')
+    updateVolumeButtonImage()
 }
 
 
@@ -62,7 +61,6 @@ function togglePause(pause, sound, imgPath) {
 function stopGame() {
     document.getElementById('gameOver').classList.remove('dnone');
     setMusic();
-    saveSettings();
 }
 
 
@@ -89,6 +87,7 @@ function gameSound() {
 function muteSound() {
     let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
     localStorage.setItem('soundMuted', !soundMuted);
+    updateVolumeButtonImage();
 }
 
 function resetGame() {
@@ -97,7 +96,13 @@ function resetGame() {
     gameStarted = false;
 }
 
-
+function updateVolumeButtonImage() {
+    const volumeBtn = document.getElementById('volumeBtn');
+    const isMuted = localStorage.getItem('soundMuted') === 'true';
+    volumeBtn.style.backgroundImage = isMuted
+      ? 'url(../img/control/sound-off.png)'
+      : 'url(../img/control/sound-on.png)';
+  }
 
 function setupTouchListeners() {
     document.getElementById('canvas').addEventListener('touchstart', (e) => {

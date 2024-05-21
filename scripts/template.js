@@ -4,7 +4,7 @@ function createHtmlForGame() {
             <img class="loadingImg" src="./img/loading/mexican-hat.png" alt="">
             <div class="loadingStatus">LOADING...</div>
         </div>
-        <div id="starScreen" class="">
+        <div id="startScreen" class="">
             <div class="btnContainer">
                 <button onclick="startGame()" class="btnStyle">Start</button>
                 <button onclick="toggleInfo('gameInfoContainer')" class="btnStyle">Control</button>

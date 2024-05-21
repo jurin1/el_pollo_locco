@@ -1,0 +1,27 @@
+#throwKey, #shortThrowKey {
+    background-image: url(../img/control/bottle.png);
+}
+
+#leftKey {
+    background-image: url(../img/control/left.png);
+}
+
+#rightKey {
+    background-image: url(../img/control/right.png);
+}
+
+#jumpKey {
+    background-image: url(../img/control/up.png);
+}
+
+#infoIngameBtn {
+    background-image: url(../img/control/joystick.png);
+}
+
+#pauseBtn {
+    background-image: url(../img/control/pause-button.png);
+}
+
+#fullScreenBtn {
+    background-image: url(../img/control/expand.png);
+}

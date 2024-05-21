@@ -1,0 +1,51 @@
+#startScreen {
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/9_intro_outro_screens/start/startscreen_1.png);
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    animation: fadeIn 500ms ease;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: .5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.btnContainer {
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+#gameInfo {
+    width: 450px;
+    height: 100px;
+    padding: 10px;
+    background-color: #FF9601;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    border-radius: 10px;
+    animation: fadeIn 225ms ease;
+}
+
+.controlContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.controllerImg {
+    width: 50px;
+}

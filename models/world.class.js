@@ -7,7 +7,7 @@ class World {
     coinStatusBar = new CoinStatusBar();
     endbossStatusBar = new EndbossStatusBar();
     throwableObject = [];
-    gamePaused = false;
+    gamePaused;
     ctx;
     canvas;
     keyboard;

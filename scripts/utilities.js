@@ -102,12 +102,12 @@ function toggleFullscreen() {
     fullScreenEnabled = !fullScreenEnabled;
     let element = document.getElementById('gameScreen');
     let button = document.getElementById('fullScreenBtn');
-    if (!fullScreenEnabled) {
+    if (fullScreenEnabled) {
         enterFullscreen(element)
-        button.style.backgroundImage = `url('img/control/normalscreen.png')`;
+        button.style.backgroundImage = `url('img/control/resize.png')`;
     } else {
         exitFullscreen()
-        button.style.backgroundImage = `url('img/control/fullscreen.png')`;
+        button.style.backgroundImage = `url('img/control/expand.png')`;
     }
 }
 
@@ -125,14 +125,13 @@ function enterFullscreen(element) {
     }
 }
 
-/**
- * Exits fullscreen mode.
- */
 function exitFullscreen() {
-    if (document.exitFullscreen) {
+    if (document.fullscreenElement || document.webkitIsFullScreen) {
+      if (document.exitFullscreen) {
         document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
+      } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
+      }
     }
-}
+  }
 

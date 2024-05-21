@@ -1,0 +1,42 @@
+/* === LOADING-SCREEN === */
+
+#loadingScreen {
+    width: 100%;
+    height: 100%;
+    background-image: url(./img/5_background/second_half_background.png);
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    right: 0;
+    animation: fadeIn 100ms ease-out;
+}
+
+.loadingImg {
+    margin-bottom: 20px;
+    animation: spin 3s linear infinite;
+}
+
+.loadingStatus {
+    font-size: 1.5rem;
+}
+
+.fadeOut {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

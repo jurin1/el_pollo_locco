@@ -237,7 +237,6 @@ class World {
         this.addObjectsToMap(this.level.clouds);
 
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.endbossStatusBar);
         this.addToMap(this.coinStatusBar);
         this.addToMap(this.bottleStatusBar);
         this.addToMap(this.statusBar);
@@ -253,6 +252,7 @@ class World {
         requestAnimationFrame(() => {
             this.draw();
         });
+        if(this.endbossFight) this.addToMap(this.endbossStatusBar);
     }
 
 

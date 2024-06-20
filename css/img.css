@@ -1,4 +1,4 @@
-#throwKey, #shortThrowKey {
+/* #throwKey, #shortThrowKey {
     background-image: url(../img/control/bottle.png);
 }
 
@@ -12,7 +12,7 @@
 
 #jumpKey {
     background-image: url(../img/control/up.png);
-}
+} */
 
 #infoIngameBtn {
     background-image: url(../img/control/joystick.png);

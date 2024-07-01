@@ -1,0 +1,4 @@
+{
+    "CodeGPT.apiKey": "Groq",
+    "CodeGPT.Autocomplete.provider": "Ollama - codestral:latest"
+}

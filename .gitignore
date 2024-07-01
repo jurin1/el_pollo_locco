@@ -1,2 +1,5 @@
 /img
 /audio
+/node_modules
+package-json
+package.json

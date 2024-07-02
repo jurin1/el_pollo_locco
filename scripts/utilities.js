@@ -6,15 +6,15 @@ const LONG_DELAY = 2000;
 
 
 /**
- * Adds or removes the 'dnone' class to toggle the display of an element.
+ * Adds or removes the 'd-none' class to toggle the display of an element.
  * @param {string} id - The ID of the element to modify.
  * @param {string} actionType - The type of action to perform ('add' to hide, 'remove' to show).
  */
 function toggleDisplay(id, actionType) {
     if (actionType == 'add') {
-        document.getElementById(id).classList.add('dnone');
+        document.getElementById(id).classList.add('d-none');
     } else {
-        document.getElementById(id).classList.remove('dnone');
+        document.getElementById(id).classList.remove('d-none');
     }
 }
 
@@ -32,32 +32,23 @@ function setDelay(fn, time) {
  * @param {string} id - The ID of the element.
  */
 function toggleInfo(id) {
-    document.getElementById(id).classList.toggle('dnone');
-    document.getElementById(id).classList.toggle('fadeIn');
-    if (id.toLowerCase().includes('info')) {
-        document.getElementById(id).innerHTML = createHtmlForInfo(id);
+    const element = document.getElementById(id);
+    const isInfo = id.toLowerCase().includes('info');
+    
+    element.classList.toggle('d-none');
+    element.classList.toggle('fadeIn');
+
+    if (isInfo) {
+        element.innerHTML = isMobileDevice() ? controlerInfoMobile(id) : controlerInfo(id);
     } else {
-        document.getElementById(id).innerHTML = createHtmlForLicense(id);
+        element.innerHTML = createHtmlForLicense(id);
     }
 }
 
 
 
-// /**
-//  * Performs pre-sound settings by muting or unmuting sounds and updating the volume button appearance.
-//  */
-// function preSoundSetting() {
-//     let button = document.getElementById('volumeBtn');
-//     let objects = [world.character, ...world.level.enemies, world];
-//     objects.forEach(obj => {
-//         for (let key in obj) {
-//             if (key.toLowerCase().includes('sound')) {
-//                 obj[key].muted = soundMuted;
-//                 button.style.backgroundImage = `url('img/control/volume${soundMuted ? "-mute" : ""}.png')`;
-//             }
-//         }
-//     });
-// }
+
+
 
 /**
  * Sets a stoppable interval by executing a function repeatedly at a specified time interval.

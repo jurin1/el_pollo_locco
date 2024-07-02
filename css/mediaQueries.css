@@ -1,8 +1,8 @@
 
-@media (max-width: 900px) {
+@media  (max-hight: 800px){
 
     #mobileControler {
-        display: flex;
+        display: block;
     }
 }
 

@@ -24,7 +24,7 @@ body {
 
 
 
-.dnone {
+.d-none {
     display: none !important;
 }
 
@@ -47,7 +47,7 @@ body {
 }
 
 .closeBtnStyle {
-    background-image: url(../img/control/close.png);
+    background-image: url(../img/control/close.svg);
     border: none;
     background-color: #FF9601;
     background-size: 15px 15px;

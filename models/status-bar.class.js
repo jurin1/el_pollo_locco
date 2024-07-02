@@ -1,3 +1,7 @@
+/**
+ * Represents a status bar that displays the health or other status metrics of the player.
+ * Extends DrawableObject to be drawn on the canvas.
+ */
 class StatusBar extends DrawableObject {
     IMAGES = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/green/0.png',
@@ -12,6 +16,10 @@ class StatusBar extends DrawableObject {
     width = 200;
     height = 50;
 
+    /**
+     * Constructs a StatusBar object.
+     * Loads the images for the status bar and sets the initial percentage to 100.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);

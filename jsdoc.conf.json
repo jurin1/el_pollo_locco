@@ -1,0 +1,9 @@
+{
+    "source": {
+      "include": ["models", "scripts","levels"]
+    },
+    "opts": {
+      "destination": "./docs/"
+    }
+  }
+  

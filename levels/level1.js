@@ -1,7 +1,16 @@
+/**
+ * Represents the first level of the game.
+ * Global variable representing the level instance.
+ * @type {Level}
+ */
 let level1;
 
+/**
+ * Initializes the first level of the game with enemies, clouds, background objects, bottles, and coins.
+ */
 function initLevel() {
     level1 = new Level(
+        // Array of enemies in the level
         [
             new Chicken(700),
             new Chicken(1000),
@@ -15,6 +24,7 @@ function initLevel() {
             new ChickenSmall(1500),
             new ChickenSmall(1800)
         ],
+        // Array of clouds in the level
         [
             new Cloud(-700),
             new Cloud(0),
@@ -24,6 +34,7 @@ function initLevel() {
             new Cloud(2300),
             new Cloud(2800)
         ],
+        // Array of background objects in the level
         [
             new BackgroundObject('img/5_background/layers/air.png', -719),
             new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
@@ -46,6 +57,7 @@ function initLevel() {
             new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 3),
             new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 3)
         ],
+        // Array of bottles in the level
         [
             new Bottle(),
             new Bottle(),
@@ -60,6 +72,7 @@ function initLevel() {
             new Bottle(),
             new Bottle()
         ],
+        // Array of coins in the level
         [
             new Coin(),
             new Coin(),
@@ -70,7 +83,7 @@ function initLevel() {
             new Coin(),
             new Coin(),
             new Coin(),
-            new Coin(),
+            new Coin()
         ]
     );
 }

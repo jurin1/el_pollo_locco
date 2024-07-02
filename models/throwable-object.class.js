@@ -1,3 +1,7 @@
+/**
+ * Represents a throwable object, such as a bottle, in the game.
+ * @extends MovableObject
+ */
 class ThrowableObject extends MovableObject {
     x = 100;
     y = 340;
@@ -25,6 +29,13 @@ class ThrowableObject extends MovableObject {
     ];
     throw_animation;
 
+    /**
+     * Creates an instance of the ThrowableObject class.
+     * @param {number} x - The initial x position of the object.
+     * @param {number} y - The initial y position of the object.
+     * @param {boolean} otherDirection - The direction to throw the object.
+     * @param {number} speed - The speed of the thrown object.
+     */
     constructor(x, y, otherDirection, speed) {
         super().loadImage('img/6_salsa_bottle/1_salsa_bottle_on_ground.png');
         this.loadImages(this.IMAGES_ROTATION);
@@ -33,7 +44,13 @@ class ThrowableObject extends MovableObject {
         this.animate();
     }
 
-
+    /**
+     * Initiates the throwing action for the object.
+     * @param {number} x - The initial x position of the object.
+     * @param {number} y - The initial y position of the object.
+     * @param {boolean} otherDirection - The direction to throw the object.
+     * @param {number} speed - The speed of the thrown object.
+     */
     throw(x, y, otherDirection, speed) {
         this.x = x;
         this.y = y;
@@ -45,11 +62,12 @@ class ThrowableObject extends MovableObject {
             } else {
                 this.x -= speed;
             }
-            
         }, 50);
     }
 
-
+    /**
+     * Animates the throwable object by rotating and splashing it.
+     */
     animate() {
         setStoppableInterval(() => {
             this.rotateBottle();
@@ -57,12 +75,16 @@ class ThrowableObject extends MovableObject {
         }, 100);
     }
 
-    
+    /**
+     * Rotates the bottle during its flight.
+     */
     rotateBottle() {
         this.playAnimation(this.IMAGES_ROTATION);
     }
 
-    
+    /**
+     * Plays the splash animation when the bottle hits the ground.
+     */
     splashBottle() {
         if (this.y > 320) {
             this.playAnimation(this.IMAGES_SPLASH);

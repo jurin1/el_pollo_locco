@@ -1,3 +1,8 @@
+/**
+ * Represents the end boss in the game, extending MovableObject.
+ * Provides functionality for the end boss's animations, movements, and interactions.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
     height = 400;
     width = 250;
@@ -9,7 +14,7 @@ class Endboss extends MovableObject {
         right: 20,
         top: 80,
         bottom: 30
-    }
+    };
     positionEnd = false;
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -49,6 +54,9 @@ class Endboss extends MovableObject {
     ];
     chicken_sound = new Audio('audio/endbossHurt.mp3');
 
+    /**
+     * Constructs an Endboss object and loads its images.
+     */
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.x = 2500;
@@ -60,17 +68,21 @@ class Endboss extends MovableObject {
         setTimeout(() => this.animate(), 5000);
     }
 
-
+    /**
+     * Starts the end boss's animations and movements.
+     */
     animate() {
         const moveInterval = setInterval(() => {
-            if(!world.gamePaused) this.movingEndboss()
+            if (!world.gamePaused) this.movingEndboss();
         }, 1000 / 60);
         setStoppableInterval(() => {
-            if(!world.gamePaused) this.animateEndboss(moveInterval)
+            if (!world.gamePaused) this.animateEndboss(moveInterval);
         }, 200);
     }
 
-
+    /**
+     * Initiates the end boss fight if conditions are met.
+     */
     startEndBoss() {
         if (this.canEndbossStart()) {
             setMusic('endBossFight_sound');
@@ -79,27 +91,37 @@ class Endboss extends MovableObject {
         }
     }
 
-
+    /**
+     * Plays the dead animation for the end boss.
+     * @param {number} mI - Unused parameter.
+     */
     endBossDead(mI) {
         this.playAnimation(this.IMAGES_DEAD);
     }
 
-
+    /**
+     * Handles the movement of the end boss based on the character's position.
+     */
     movingEndboss() {
-        if (this.isCharacterAtTheEnd())
+        if (this.isCharacterAtTheEnd()) {
             this.moveLeft();
-        if (this.isCharacterNear())
+        }
+        if (this.isCharacterNear()) {
             this.moveRight();
+        }
     }
-    
 
+    /**
+     * Animates the end boss based on its state.
+     * @param {number} mI - Unused parameter.
+     */
     animateEndboss(mI) {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
         } else if (!this.positionEnd) {
             this.playAnimation(this.IMAGES_ALERT);
         } else if (world.character.isHurt()) {
-            this.playAnimation(this.IMAGES_ATTACK)
+            this.playAnimation(this.IMAGES_ATTACK);
         } else if (this.energy <= 0) {
             this.endBossDead(mI);
         } else {
@@ -108,29 +130,42 @@ class Endboss extends MovableObject {
         this.startEndBoss();
     }
 
-
+    /**
+     * Checks if the character is at the end position.
+     * @returns {boolean} - Returns true if the character is at the end position.
+     */
     isCharacterAtTheEnd() {
         return (2500 - world.character.x) < 800 && this.x > world.character.x && this.positionEnd && gameStarted;
     }
 
-
+    /**
+     * Moves the end boss to the left.
+     */
     moveLeft() {
         super.moveLeft();
         this.otherDirection = false;
     }
 
-
+    /**
+     * Checks if the character is near the end boss.
+     * @returns {boolean} - Returns true if the character is near.
+     */
     isCharacterNear() {
         return (2500 - world.character.x) > 800 && this.x < 2500 && this.positionEnd && gameStarted;
     }
 
-
+    /**
+     * Moves the end boss to the right.
+     */
     moveRight() {
         super.moveRight();
         this.otherDirection = true;
     }
 
-    
+    /**
+     * Checks if the end boss can start the fight.
+     * @returns {boolean} - Returns true if the end boss can start.
+     */
     canEndbossStart() {
         return (2500 - world.character.x) < 700;
     }

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
 <head>
+    <meta name="google" content="notranslate">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon/favicon.ico" type="image/x-icon">
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/canvas.css">
@@ -43,7 +44,12 @@
     <h1 class="headline">El Pollo Loco</h1>
     <img class="rotateImgStyle" src="./img/control/rotate.png" alt="">
     <div id="gameScreen"></div>
-    <button class="btnStyle attributeBtn" onclick="toggleInfo('linkMainContainer')">License Information</button>
-    <div id="linkMainContainer" class="d-none" onclick="toggleInfo('linkMainContainer')"></div>
+<footer>
+    <a href="./templates/legal_notice.html"><button class="btnStyle attributeBtn">Legal Notice</button></a>
+    <a href="./templates/privacy_policy.html"><button class="btnStyle attributeBtn">Privacy Policy</button></a>
+    <button class="btnStyle attributeBtn" onclick="createLicenseInfo('licenseContainer')">License Information</button>
+</footer>
+    <div id="licenseContainer" class="d-none" onclick="createLicenseInfo('licenseContainer')"></div>
+
 </body>
 </html>

@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'lato';
+    src: url('../fonts/Lato-Regular.ttf') format('truetype');
+}
+
+body {
+
+    background-image: url(../img/game_background.jpg);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(136, 136, 136, 0.8) transparent;
+
+}
+
+section{
+    background-color: white;
+    margin: 70px 90px;
+    padding: 30px 30px;
+    text-align: justify;
+    font-family: lato;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+}
+
+@media (max-width: 600px) {
+    
+    section{
+        padding: 10px 10px;
+        margin: 10px 10px;
+    }
+}
+
+
+
+
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(136, 136, 136, 0.8);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(85, 85, 85, 0.8);
+        }

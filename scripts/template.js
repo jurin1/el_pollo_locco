@@ -7,9 +7,9 @@ function createHtmlForGame() {
         <div id="startScreen" class="">
             <div class="btnContainer">
                 <button onclick="startGame()" class="btnStyle">Start</button>
-                <button onclick="toggleInfo('gameInfoContainer')" class="btnStyle">Control</button>
+                <button onclick="controllerInfo('gameInfoContainer')" class="btnStyle">Control</button>
             </div>
-            <div id="gameInfoContainer" class="d-none infoWindowStyle" onclick="toggleInfo('gameInfoContainer')"></div>
+            <div id="gameInfoContainer" class="d-none infoWindowStyle" onclick="controllerInfo('gameInfoContainer')"></div>
         </div>
         <div id="gameOver" class="d-none">
             <img class="gameOverImg" src="./img/9_intro_outro_screens/game_over/game over.png">
@@ -19,27 +19,27 @@ function createHtmlForGame() {
             <div id="ingameControl">
                 <button class="ingameControlBtn" id="pauseBtn" onclick="pauseGame()"></button>
                 <button class="ingameControlBtn" id="infoIngameBtn"
-                    onclick="toggleInfo('ingameInfoContainer')"></button>
+                    onclick="controllerInfo('ingameInfoContainer')"></button>
                 <button class="ingameControlBtn" id="volumeBtn" onclick="muteSound()"></button>
                 <button class="ingameControlBtn" id="fullScreenBtn" onclick="toggleFullscreen()"></button>
             </div>
             <div 
-                id="ingameInfoContainer" class="d-none infoWindowStyle" onclick="toggleInfo('ingameInfoContainer')">
+                id="ingameInfoContainer" class="d-none infoWindowStyle" onclick="controllerInfo('ingameInfoContainer')">
             </div>
-            <div id="mobileControler">
+            <div id="mobileController">
                 <div class="mobileLeftBtn">
-                    <button id="leftKey" class="mobileBtn" ontouchstart="mobileControlerStart(this.id)" ontouchend="mobileControlerEnd(this.id)">
+                    <button id="leftKey" class="mobileBtn" ontouchstart="mobileControllerStart(this.id)" ontouchend="mobileControllerEnd(this.id)">
                         <img src="/img/control/mobile_btn_left.svg">
                     </button>
-                    <button id="rightKey" class="mobileBtn" ontouchstart="mobileControlerStart(this.id)" ontouchend="mobileControlerEnd(this.id)">
+                    <button id="rightKey" class="mobileBtn" ontouchstart="mobileControllerStart(this.id)" ontouchend="mobileControllerEnd(this.id)">
                         <img src="/img/control/mobile_btn_right.svg">
                     </button>
                 </div>
                 <div class="mobileRightBtn">
-                    <button id="jumpKey" class="mobileBtn" ontouchstart="mobileControlerStart(this.id)" ontouchend="mobileControlerEnd(this.id)">
+                    <button id="jumpKey" class="mobileBtn" ontouchstart="mobileControllerStart(this.id)" ontouchend="mobileControllerEnd(this.id)">
                         <img src="/img/control/mobile_btn_jump.svg">
                     </button>
-                    <button id="throwKey" class="mobileBtn" ontouchstart="mobileControlerStart(this.id)" ontouchend="mobileControlerEnd(this.id)">
+                    <button id="throwKey" class="mobileBtn" ontouchstart="mobileControllerStart(this.id)" ontouchend="mobileControllerEnd(this.id)">
                         <img src="/img/control/mobile_btn_throw.svg">
                     </button>
                 </div>
@@ -53,7 +53,7 @@ function createHtmlForGame() {
 function controlerInfo(id) {
     return `
         <div id="gameInfo" onclick="doNotClose(event)">
-            <button onclick="toggleInfo('${id}')" class="closeBtnStyle"></button>
+            <button onclick="controllerInfo('${id}')" class="closeBtnStyle"></button>
             <div class="controlContainer">
                 <img class="controllerImg" src="./img/control/arrows.png" alt="">
                 <span>walk/jump</span>
@@ -73,7 +73,7 @@ function controlerInfo(id) {
 function controlerInfoMobile(id) {
     return `
         <div id="gameInfo" onclick="doNotClose(event)">
-            <button onclick="toggleInfo('${id}')" class="closeBtnStyle"></button>
+            <button onclick="controllerInfo('${id}')" class="closeBtnStyle"></button>
             <div class="controlContainer">
                 <img class="svgControler" src="/img/control/mobile_btn_left.svg">
                 <span>walk<br>left</span>
@@ -95,10 +95,10 @@ function controlerInfoMobile(id) {
 }
 
 
-function createHtmlForLicense(id) {
+function licenseInfo(id) {
     return `
         <div class="linkWindow" onclick="doNotClose(event)">
-            <button onclick="toggleInfo('${id}')" class="closeBtnStyle"></button>
+            <button onclick="createLicenseInfo('${id}')" class="closeBtnStyle"></button>
             <ul>
                 <li>
                     <a class="attributeLinkStyle" href="https://game-icons.net/1x1/guard13007/play-button.html"

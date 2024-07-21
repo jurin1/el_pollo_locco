@@ -34,7 +34,7 @@ async function loadGame(newStart) {
     audioManager.playAudio('gameSound');
     initLevel();
     init();
-    await adjustMobileControlerDisplay();
+    await adjustMobileControllerDisplay();
 }
 
 /**
@@ -177,22 +177,24 @@ function reloadPage(){
  * Sets up touch listeners for game controls.
  * @param {string} id - The ID of the button that triggered the touch event.
  */
-function mobileControlerStart(id) {
+function mobileControllerStart(id) {
     const key = touchMap[id];
     if (key) {
         keyboard[key] = true;
     }
+    event.preventDefault();
 }
 
 /**
  * Handles touch end events for game controls.
  * @param {string} id - The ID of the button that triggered the touch end event.
  */
-function mobileControlerEnd(id) {
+function mobileControllerEnd(id) {
     const key = touchMap[id];
     if (key) {
         keyboard[key] = false;
     }
+    event.preventDefault();
 }
 
 /**
@@ -208,19 +210,19 @@ function isMobileDevice() {
  * Adjusts the display of the mobile controler based on the device type.
  * Displays the controler if the device is mobile, hides it otherwise.
  */
-function adjustMobileControlerDisplay() {
-    const mobileControler = document.getElementById('mobileControler');
+function adjustMobileControllerDisplay() {
+    const mobileController = document.getElementById('mobileController');
     if (isMobileDevice()) {
-        mobileControler.classList.remove('d-none');
+        mobileController.classList.remove('d-none');
         toggleFullscreen();
     } else {
-        mobileControler.classList.add('d-none');
+        mobileController.classList.add('d-none');
     }
 }
 
 // Event listener for window resize to adjust mobile controler display
-window.addEventListener('resize', adjustMobileControlerDisplay);
+window.addEventListener('resize', adjustMobileControllerDisplay);
 
-// Initial call to adjustMobileControlerDisplay function
-adjustMobileControlerDisplay();
+// Initial call to adjustMobileControllerDisplay function
+adjustMobileControllerDisplay();
 

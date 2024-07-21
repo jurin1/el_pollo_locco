@@ -17,7 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url(../img/style/game_background.jpg);
+    background-image: url(../img/game_background.jpg);
     background-size: cover;
     overflow-y: hidden;
 }
@@ -114,7 +114,7 @@ body {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-#linkMainContainer {
+#licenseContainer {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -123,6 +123,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#mobileTerms {
+    width: 50%;
+    height: 37%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#mobileTermsOpen:hover{
+    cursor: pointer;
 }
 
 .linkWindow {

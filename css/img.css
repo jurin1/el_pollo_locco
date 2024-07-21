@@ -25,3 +25,12 @@
 #fullScreenBtn {
     background-image: url(../img/control/expand.png);
 }
+
+.infoSvg {
+    position: absolute;
+    top: 5px; 
+    right: 5px; 
+    width: 24px; 
+    height: 24px;
+    z-index: 1000;
+}

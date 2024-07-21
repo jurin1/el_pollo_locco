@@ -31,24 +31,24 @@ function setDelay(fn, time) {
  * Toggles the visibility of an element and applies fade-in animation.
  * @param {string} id - The ID of the element.
  */
-function toggleInfo(id) {
+function controllerInfo(id) {
     const element = document.getElementById(id);
     const isInfo = id.toLowerCase().includes('info');
     
     element.classList.toggle('d-none');
     element.classList.toggle('fadeIn');
 
-    if (isInfo) {
-        element.innerHTML = isMobileDevice() ? controlerInfoMobile(id) : controlerInfo(id);
-    } else {
-        element.innerHTML = createHtmlForLicense(id);
-    }
+    element.innerHTML = isMobileDevice() ? controlerInfoMobile(id) : controlerInfo(id);
 }
 
+function createLicenseInfo(id){
+    const element = document.getElementById(id);
+    
+    element.classList.toggle('d-none');
+    element.classList.toggle('fadeIn');
 
-
-
-
+    element.innerHTML = isMobileDevice() ? mobileTerms("close") + licenseInfo(id) : licenseInfo(id)
+}
 
 /**
  * Sets a stoppable interval by executing a function repeatedly at a specified time interval.
@@ -126,3 +126,13 @@ function exitFullscreen() {
     }
   }
 
+  function mobileTerms(id) {
+    let element = document.getElementById('mobileTerms');
+    const closeMobileTerms = id.toLowerCase().includes('close');
+
+    if(closeMobileTerms){
+        element.classList.add('d-none');
+    } else {
+        element.classList.remove('d-none');
+    }
+  }

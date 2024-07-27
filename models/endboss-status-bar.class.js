@@ -64,6 +64,7 @@ class EndbossStatusBar extends DrawableObject {
     decreaseEnergyOfEndbossStatusBar(enemy) {
         if (enemy instanceof Endboss) {
             this.setPercentage(enemy.energy);
+            audioManager.playAudio('endbossHurt', 0.5);
         } else {
             return;
         }

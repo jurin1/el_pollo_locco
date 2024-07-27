@@ -125,9 +125,9 @@ body {
     align-items: center;
 }
 
-#mobileTerms {
+#terms {
     width: 50%;
-    height: 37%;
+    height: 60%;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.3);
     z-index: 5;
@@ -135,9 +135,11 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    top: 20%;
+    left: 27%;
 }
 
-#mobileTermsOpen:hover{
+#termsOpen:hover{
     cursor: pointer;
 }
 

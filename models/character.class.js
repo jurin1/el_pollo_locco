@@ -185,7 +185,7 @@ class Character extends MovableObject {
      */
     movingCharacter() {
         if (!world.gamePaused) {
-            this.audioManager.pauseAudio('walking_sound');
+            this.audioManager.pauseAudio('walkingSound');
             if (this.canMoveRight())
                 this.moveRight();
             if (this.canMoveLeft())
@@ -252,7 +252,7 @@ class Character extends MovableObject {
     moveRight() {
         super.moveRight();
         this.otherDirection = false;
-        this.audioManager.playAudio('walking_sound', 1);
+        this.audioManager.playAudio('walkingSound', 1);
     }
 
     /**
@@ -270,7 +270,7 @@ class Character extends MovableObject {
     moveLeft() {
         super.moveLeft();
         this.otherDirection = true;
-        this.audioManager.playAudio('walking_sound');
+        this.audioManager.playAudio('walkingSound');
     }
 
     /**
@@ -287,7 +287,7 @@ class Character extends MovableObject {
      */
     jump() {
         super.jump();
-        this.audioManager.playAudio('jump_sound');
+        this.audioManager.playAudio('jumpSound');
     }
 
     /**

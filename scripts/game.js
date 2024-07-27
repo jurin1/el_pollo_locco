@@ -7,6 +7,9 @@ let percent = 0;
 let gameStarted = false;
 let intervalIds = [];
 let fullScreenEnabled;
+const imgLose = "./img/9_intro_outro_screens/game_over/you_lost.png";
+const imgWin = "./img/9_intro_outro_screens/game_over/game_over.png";
+let imgScr;
 const audioManager = new AudioManager();
 const keyMap = {
     'ArrowUp': 'UP',
@@ -31,16 +34,14 @@ const touchMap = {
 async function loadGame(newStart) {
     if (newStart) resetGame();
     await generateHTML();
-    audioManager.playAudio('gameSound');
     initLevel();
-    init();
-    await adjustMobileControllerDisplay();
+    initCanvas();
 }
 
 /**
  * Initializes the canvas and world objects.
  */
-function init() {
+function initCanvas() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
@@ -53,13 +54,29 @@ async function generateHTML() {
 }
 
 /**
- * Starts the game by toggling the display and updating the volume button image.
+ * Starts the game by hiding the start screen, displaying the loading screen,
+ * and showing the game canvas once the loading progress is complete.
  */
-function startGame() {
-    toggleDisplay('canvasContainer', 'remove');
-    gameStarted = true;
-    toggleDisplay('startScreen', 'add');
+async function startGame() {
+    audioManager.startGameSound();
+    toggleDisplay('startScreen');  
+    toggleDisplay('loadingScreen'); 
+    await loadingGame();
+    toggleDisplay('loadingScreen'); 
+    toggleDisplay('canvasContainer'); 
     updateVolumeButtonImage();
+    mobileController();
+}
+
+/**
+ * Handles the game loading process by pausing the game,
+ * displaying the loading bar, and resuming the game after loading is complete.
+ */
+async function loadingGame(){
+    gameStarted = true;
+    world.gamePaused = true
+    await loadingBar();
+    world.gamePaused = false
 }
 
 /**
@@ -67,30 +84,33 @@ function startGame() {
  */
 function pauseGame() {
     if (!world.gamePaused) {
-        togglePause(true, '', 'img/control/play-button.png');
+        togglePause(true, 'img/control/play-button.png');
+        audioManager.muteGameSound(true)
     } else {
-        togglePause(false, gameSound(), 'img/control/pause-button.png');
+        togglePause(false, 'img/control/pause-button.png');
+        audioManager.muteGameSound(false)
     }
+    
 }
 
 /**
  * Toggles the game's paused state, updates the music, and changes the pause button image.
  * @param {boolean} pause - Indicates if the game should be paused.
- * @param {string} sound - The sound to play.
  * @param {string} imgPath - The path to the image to set for the pause button.
  */
-function togglePause(pause, sound, imgPath) {
+function togglePause(pause, imgPath) {
     let button = document.getElementById('pauseBtn');
     world.gamePaused = pause;
-    setMusic(sound);
     button.style.backgroundImage = `url(${imgPath})`;
 }
 
 /**
  * Stops the game and displays the game over screen.
  */
-function stopGame() {
-    document.getElementById('gameOver').classList.remove('d-none');
+function stopGame(imgSrc) {
+    const gameOver = document.getElementById('gameOver');
+    gameOver.classList.remove('d-none');
+    gameOver.innerHTML += `<img class="gameOverImg" src="${imgSrc}" />`;  // Korrektur hier
     setMusic();
 }
 
@@ -111,9 +131,9 @@ function setMusic(music) {
  */
 function gameSound() {
     if (world.endbossFight) {
-        return 'endBossFight_sound';
+        return 'endbossFightSound';
     } else {
-        return 'gameMusic_sound';
+        return 'gameSound';
     }
 }
 
@@ -134,19 +154,6 @@ function resetGame() {
     world = null;
     gameStarted = false;
 }
-
-/**
- * Updates the volume button image based on the mute state.
- */
-function updateVolumeButtonImage() {
-    const volumeBtn = document.getElementById('volumeBtn');
-    const isMuted = localStorage.getItem('soundMuted') === 'true';
-    volumeBtn.style.backgroundImage = isMuted
-        ? 'url(../img/control/sound-off.png)'
-        : 'url(../img/control/sound-on.png)';
-}
-
-
 
 
 // KEYBOARD LISTENERS
@@ -197,32 +204,5 @@ function mobileControllerEnd(id) {
     event.preventDefault();
 }
 
-/**
- * Checks if the current device is a mobile device.
- * @returns {boolean} True if the device is a mobile device, otherwise false.
- */
-function isMobileDevice() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    return /mobile|android|iphone|ipad|iemobile|opera mini/i.test(userAgent);
-}
 
-/**
- * Adjusts the display of the mobile controler based on the device type.
- * Displays the controler if the device is mobile, hides it otherwise.
- */
-function adjustMobileControllerDisplay() {
-    const mobileController = document.getElementById('mobileController');
-    if (isMobileDevice()) {
-        mobileController.classList.remove('d-none');
-        toggleFullscreen();
-    } else {
-        mobileController.classList.add('d-none');
-    }
-}
-
-// Event listener for window resize to adjust mobile controler display
-window.addEventListener('resize', adjustMobileControllerDisplay);
-
-// Initial call to adjustMobileControllerDisplay function
-adjustMobileControllerDisplay();
 

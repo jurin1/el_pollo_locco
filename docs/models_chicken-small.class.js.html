@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/chicken-small.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/chicken-small.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @class ChickenSmall
+ * @extends MovableObject
+ * @classdesc Represents a small chicken enemy in the game.
+ */
+class ChickenSmall extends MovableObject {
+    /**
+     * The width of the small chicken.
+     * @type {number}
+     */
+    width = 50;
+
+    /**
+     * The height of the small chicken.
+     * @type {number}
+     */
+    height = 60;
+
+    /**
+     * The y-coordinate of the small chicken.
+     * @type {number}
+     */
+    y = 370;
+
+    /**
+     * The energy level of the small chicken.
+     * @type {number}
+     */
+    energy = 1;
+
+    /**
+     * The offset values for collision detection.
+     * @type {{left: number, right: number, top: number, bottom: number}}
+     */
+    offset = {
+        left: 5,
+        right: 10,
+        top: 5,
+        bottom: 10
+    }
+
+    /**
+     * Array of image paths for walking animation.
+     * @type {string[]}
+     */
+    IMAGES_WALKING = [
+        'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
+        'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
+        'img/3_enemies_chicken/chicken_small/1_walk/3_w.png'
+    ]
+
+    /**
+     * Image path for the dead state.
+     * @type {string}
+     */
+    IMAGE_DEAD = 'img/3_enemies_chicken/chicken_small/2_dead/dead.png';
+
+    /**
+     * Audio manager for chicken sounds.
+     * @type {AudioManager}
+     */
+    audioManager = new AudioManager();
+
+    /**
+     * Creates an instance of ChickenSmall.
+     * @param {number} x - The initial x-coordinate of the small chicken.
+     */
+    constructor(x) {
+        super();
+        this.loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
+        this.x = x;
+        this.speed = 0.15 + Math.random() * 1;
+        this.loadImages(this.IMAGES_WALKING);
+        this.animate();
+        this.isDead();
+    }
+
+    /**
+     * Initializes the animation loop for the small chicken.
+     * This method sets up intervals for movement and animation.
+     * It also checks for the chicken's death state.
+     */
+    animate() {
+        const moveInterval = setInterval(() => {
+            if (!world.gamePaused &amp;&amp; gameStarted &amp;&amp; !world.isGameOver) this.moveLeft();
+        }, 1000 / 60);
+
+        const animateInterval = setInterval(() => {
+            if (!world.gamePaused &amp;&amp; !world.isGameOver) this.playAnimation(this.IMAGES_WALKING)
+        }, 200);
+
+        setStoppableInterval(() => this.enemyKill(this.energy, moveInterval, animateInterval, this.IMAGE_DEAD), 200);
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AudioManager.html">AudioManager</a></li><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="BottleStatusBar.html">BottleStatusBar</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="CoinStatusBar.html">CoinStatusBar</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="EndbossStatusBar.html">EndbossStatusBar</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="StatusBar.html">StatusBar</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkGameStarted">checkGameStarted</a></li><li><a href="global.html#controllerInfo">controllerInfo</a></li><li><a href="global.html#doNotClose">doNotClose</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#exitFullscreen">exitFullscreen</a></li><li><a href="global.html#gameSound">gameSound</a></li><li><a href="global.html#generateHTML">generateHTML</a></li><li><a href="global.html#initCanvas">initCanvas</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#isMobileDevice">isMobileDevice</a></li><li><a href="global.html#level1">level1</a></li><li><a href="global.html#loadGame">loadGame</a></li><li><a href="global.html#loadingBar">loadingBar</a></li><li><a href="global.html#loadingGame">loadingGame</a></li><li><a href="global.html#mobileControllerEnd">mobileControllerEnd</a></li><li><a href="global.html#mobileControllerStart">mobileControllerStart</a></li><li><a href="global.html#muteSound">muteSound</a></li><li><a href="global.html#pauseGame">pauseGame</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#setDelay">setDelay</a></li><li><a href="global.html#setMusic">setMusic</a></li><li><a href="global.html#setStoppableInterval">setStoppableInterval</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#stopAllIntervals">stopAllIntervals</a></li><li><a href="global.html#stopGame">stopGame</a></li><li><a href="global.html#terms">terms</a></li><li><a href="global.html#toggleDisplay">toggleDisplay</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li><li><a href="global.html#togglePause">togglePause</a></li><li><a href="global.html#updateVolumeButtonImage">updateVolumeButtonImage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat Jul 27 2024 18:57:13 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

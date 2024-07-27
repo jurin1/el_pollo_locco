@@ -1,10 +1,14 @@
 function createHtmlForGame() {
     return `
-        <div id="loadingScreen" class="d-none">
+            <svg id="termsOpen" onclick="terms(this.id)" class="infoSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
+        <div id="loadingScreen" class="d-none fade">
             <img class="loadingImg" src="./img/loading/mexican-hat.png" alt="">
-            <div class="loadingStatus">LOADING...</div>
+            <div class="loadingStatus blink">LOADING...</div>
+            <div class="loadingBar">
+                <div class="progressBar" id="progressBar">0%</div>
+            </div>
         </div>
-        <div id="startScreen" class="">
+        <div id="startScreen" class="fade show">
             <div class="btnContainer">
                 <button onclick="startGame()" class="btnStyle">Start</button>
                 <button onclick="controllerInfo('gameInfoContainer')" class="btnStyle">Control</button>
@@ -12,10 +16,9 @@ function createHtmlForGame() {
             <div id="gameInfoContainer" class="d-none infoWindowStyle" onclick="controllerInfo('gameInfoContainer')"></div>
         </div>
         <div id="gameOver" class="d-none">
-            <img class="gameOverImg" src="./img/9_intro_outro_screens/game_over/game over.png">
             <button onclick="reloadPage()" class="restartBtn">Back to menu</button>
         </div>
-        <div id="canvasContainer" class="d-none">
+        <div id="canvasContainer" class="d-none fade">
             <div id="ingameControl">
                 <button class="ingameControlBtn" id="pauseBtn" onclick="pauseGame()"></button>
                 <button class="ingameControlBtn" id="infoIngameBtn"
@@ -26,7 +29,7 @@ function createHtmlForGame() {
             <div 
                 id="ingameInfoContainer" class="d-none infoWindowStyle" onclick="controllerInfo('ingameInfoContainer')">
             </div>
-            <div id="mobileController">
+            <div id="mobileController" class='d-none'>
                 <div class="mobileLeftBtn">
                     <button id="leftKey" class="mobileBtn" ontouchstart="mobileControllerStart(this.id)" ontouchend="mobileControllerEnd(this.id)">
                         <img src="/img/control/mobile_btn_left.svg">
@@ -46,6 +49,13 @@ function createHtmlForGame() {
             </div>
             <canvas class="" id="canvas" width="720px" height="480px"></canvas>
         </div>
+        <div id="terms" class="d-none" onclick="doNotClose(event)">
+        <button id="termsClose" onclick="terms(this.id)" class="closeBtnStyle"></button>
+        <a href="./templates/legal_notice.html"><button class="btnStyle attributeBtn">Legal Notice</button></a>
+        <a href="./templates/privacy_policy.html"><button class="btnStyle attributeBtn">Privacy Policy</button></a>
+        <button class="btnStyle attributeBtn" onclick="createLicenseInfo('licenseContainer')">License Information</button>
+
+    </div>
     `;
 }
 
@@ -54,17 +64,17 @@ function controlerInfo(id) {
     return `
         <div id="gameInfo" onclick="doNotClose(event)">
             <button onclick="controllerInfo('${id}')" class="closeBtnStyle"></button>
-            <div class="controlContainer">
-                <img class="controllerImg" src="./img/control/arrows.png" alt="">
-                <span>walk/jump</span>
+            <div class="controlContainer" style="margin-top: -34px !important;">
+                <img class="controllerImg" src="./img/control/keyboard.svg" alt="" style="width: 100px !important">
+                <span style="margin-top: -16px !important;">walk/jump</span>
             </div>
             <div class="controlContainer">
-                <img class="controllerImg" src="./img/control/key-d-of-a-keyboard.png" alt="">
-                <span>Power throw/<br>right bottle</span>
+                <img class="controllerImg" src="./img/control/D.svg" alt="">
+                <span>Power throw</span>
             </div>
             <div class="controlContainer">
-                <img class="controllerImg" src="./img/control/keyboard-key-f.png" alt="">
-                <span>short throw/<br>left bottle</span>
+                <img class="controllerImg" src="./img/control/F.svg" alt="">
+                <span>short throw</span>
             </div>
         </div>
     `;

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/audioManager.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/audioManager.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @class AudioManager
+ * @classdesc Manages audio playback for the game.
+ */
+class AudioManager {
+    
+    /**
+     * Creates an instance of AudioManager.
+     * Initializes the audio list and loads all audio files.
+     */
+    constructor() {
+
+        
+        /**
+         * Array to store audio objects.
+         * @type {Array&lt;{name: string, audio: HTMLAudioElement}>}
+         * @private
+         */
+        this.audios = []; 
+  
+        /**
+         * List of audio files to be loaded.
+         * @type {Array&lt;{name: string, src: string}>}
+         * @private
+         */
+        const audioList = [
+            { name: 'gameSound', src: '/audio/gameSound.mp3' },
+            { name: 'smallChickenSound', src: '/audio/smallChickenSound.mp3' },
+            { name: 'chickenSound', src: '/audio/chickenSound.mp3' },
+            { name: 'walkingSound', src: 'audio/running.mp3' },
+            { name: 'jumpSound', src: 'audio/jump.mp3' },
+            { name: 'throwSound', src: 'audio/throw.mp3' },
+            { name: 'bottleSound', src: 'audio/bottle.mp3' },
+            { name: 'breakingGlassSound', src: 'audio/glass.mp3' },
+            { name: 'characterHurtSound', src: 'audio/pain.mp3' },
+            { name: 'coinSound', src: 'audio/coinPickup.mp3' },
+            { name: 'gameOverSound', src: 'audio/gameOver.mp3' },
+            { name: 'winSound', src: 'audio/win.mp3' },
+            { name: 'endbossFightSound', src: './audio/endboss.mp3' },
+            { name: 'endbossHurt', src: './audio/endbossHurt.mp3' }         
+        ];
+    
+        this.loadAudios(audioList);
+        
+    }
+  
+    /**
+     * Loads audio files from the provided list.
+     * @param {Array&lt;{name: string, src: string}>} audioList - List of audio files to load.
+     * @private
+     */
+    loadAudios(audioList) {
+        audioList.forEach(audio => {
+            const audioElement = new Audio(audio.src);
+            this.audios.push({ name: audio.name, audio: audioElement });
+        });
+    }
+  
+    /**
+     * Plays the specified audio.
+     * @param {string} name - The name of the audio to play.
+     * @param {number} The volume at which to play the audio (0.0 to 1.0).
+     * @public
+     */
+    playAudio(name, volume ) {
+        const defaultVolume = 0.4
+      if (!this.isMuted()){
+          const audioObject = this.audios.find(audio => audio.name === name);
+          if (audioObject) {
+              audioObject.audio.volume = !volume ? defaultVolume  : volume;
+              audioObject.audio.currentTime = 0; // Reset to the beginning
+              audioObject.audio.play(); 
+          } else {
+              console.error(`Audio ${name} not found.`);
+          }
+      }
+    }
+  
+    /**
+     * Pauses the specified audio.
+     * @param {string} name - The name of the audio to pause.
+     * @public
+     */
+    pauseAudio(name) {
+        const audioObject = this.audios.find(audio => audio.name === name);
+        if (audioObject) {
+            audioObject.audio.pause();
+        } else {
+            console.error(`Audio ${name} not found.`);
+        }
+    }
+  
+    /**
+     * Pauses all currently playing audio.
+     * @public
+     */
+    pauseAllAudios() {
+        this.audios.forEach(audio => {
+            audio.audio.pause();
+        });
+    }
+  
+    /**
+     * Checks if the sound is muted.
+     * @returns {boolean} True if the sound is muted, false otherwise.
+     * @public
+     */
+    isMuted() {
+        const isMuted = JSON.parse(localStorage.getItem('soundMuted'));
+        return isMuted;
+    }
+
+        /**
+     * Mutes or unmutes the sound.
+     * @param {boolean} mute - True to mute, false to unmute.
+     * @public
+     */
+    muteGameSound(mute) {
+        const gameSound = this.audios.find(audio => audio.name === 'gameSound');
+        if (gameSound &amp;&amp; mute || this.isMuted()) {
+            gameSound.audio.pause();
+        }
+        else {
+            gameSound.audio.muted = false;
+            gameSound.audio.play();
+            
+                }
+        }
+
+
+    /**
+   * Starts playing the game sound.
+   * @public
+   */
+    startGameSound() {
+        const gameSound = this.audios.find(audio => audio.name === 'gameSound');
+            gameSound.audio.loop = true;
+            gameSound.audio.play();
+            gameSound.audio.volume = 0.2
+            gameSound.audio.muted = this.isMuted() ? true : false;
+
+    }
+
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AudioManager.html">AudioManager</a></li><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="BottleStatusBar.html">BottleStatusBar</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="ChickenSmall.html">ChickenSmall</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="CoinStatusBar.html">CoinStatusBar</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="EndbossStatusBar.html">EndbossStatusBar</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="StatusBar.html">StatusBar</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#checkGameStarted">checkGameStarted</a></li><li><a href="global.html#controllerInfo">controllerInfo</a></li><li><a href="global.html#doNotClose">doNotClose</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#exitFullscreen">exitFullscreen</a></li><li><a href="global.html#gameSound">gameSound</a></li><li><a href="global.html#generateHTML">generateHTML</a></li><li><a href="global.html#initCanvas">initCanvas</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#isMobileDevice">isMobileDevice</a></li><li><a href="global.html#level1">level1</a></li><li><a href="global.html#loadGame">loadGame</a></li><li><a href="global.html#loadingBar">loadingBar</a></li><li><a href="global.html#loadingGame">loadingGame</a></li><li><a href="global.html#mobileControllerEnd">mobileControllerEnd</a></li><li><a href="global.html#mobileControllerStart">mobileControllerStart</a></li><li><a href="global.html#muteSound">muteSound</a></li><li><a href="global.html#pauseGame">pauseGame</a></li><li><a href="global.html#resetGame">resetGame</a></li><li><a href="global.html#setDelay">setDelay</a></li><li><a href="global.html#setMusic">setMusic</a></li><li><a href="global.html#setStoppableInterval">setStoppableInterval</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#stopAllIntervals">stopAllIntervals</a></li><li><a href="global.html#stopGame">stopGame</a></li><li><a href="global.html#terms">terms</a></li><li><a href="global.html#toggleDisplay">toggleDisplay</a></li><li><a href="global.html#toggleFullscreen">toggleFullscreen</a></li><li><a href="global.html#togglePause">togglePause</a></li><li><a href="global.html#updateVolumeButtonImage">updateVolumeButtonImage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sat Jul 27 2024 18:57:13 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

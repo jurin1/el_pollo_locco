@@ -8,14 +8,41 @@ const LONG_DELAY = 2000;
 /**
  * Adds or removes the 'd-none' class to toggle the display of an element.
  * @param {string} id - The ID of the element to modify.
- * @param {string} actionType - The type of action to perform ('add' to hide, 'remove' to show).
  */
-function toggleDisplay(id, actionType) {
-    if (actionType == 'add') {
-        document.getElementById(id).classList.add('d-none');
+function toggleDisplay(id) {
+    const element = document.getElementById(id);
+    if (element.classList.contains('fade') && element.classList.contains('show')) {
+        element.classList.remove('show');
+        element.classList.add('d-none');
     } else {
-        document.getElementById(id).classList.remove('d-none');
-    }
+        element.classList.remove('d-none');
+        element.classList.add('show');
+        }
+}
+
+
+
+/**
+ * Animates the loading bar to fill from 0% to 100% in steps,
+ * resolving the promise when the loading is complete.
+ * @returns {Promise<void>} Resolves when the loading bar reaches 100%
+ */
+async function loadingBar(){
+    const progressBar = document.getElementById('progressBar');
+    let width = 0;
+
+    return new Promise((resolve) => {
+        const interval = setInterval(function() {
+            if (width >= 100) {
+                clearInterval(interval);
+                resolve();  // close the Promise if the progress bar contains 100%
+            } else {
+                width += 25;
+                progressBar.style.width = width + '%';
+                progressBar.textContent = width + '%';
+            }
+        }, 1000);
+    });
 }
 
 /**
@@ -33,11 +60,10 @@ function setDelay(fn, time) {
  */
 function controllerInfo(id) {
     const element = document.getElementById(id);
-    const isInfo = id.toLowerCase().includes('info');
     
     element.classList.toggle('d-none');
     element.classList.toggle('fadeIn');
-
+    if(gameStarted && !world.gamePaused){pauseGame();}
     element.innerHTML = isMobileDevice() ? controlerInfoMobile(id) : controlerInfo(id);
 }
 
@@ -47,7 +73,7 @@ function createLicenseInfo(id){
     element.classList.toggle('d-none');
     element.classList.toggle('fadeIn');
 
-    element.innerHTML = isMobileDevice() ? mobileTerms("close") + licenseInfo(id) : licenseInfo(id)
+    element.innerHTML = isMobileDevice() ? terms("close") + licenseInfo(id) : licenseInfo(id)
 }
 
 /**
@@ -61,8 +87,8 @@ function setStoppableInterval(fn, time) {
 }
 
 function stopInterval(intervalId) {
-    clearInterval(intervalId); // Stoppe das Intervall mit der angegebenen ID
-    // Entferne die ID aus dem Array
+    clearInterval(intervalId); // stop the interval until the array
+    // delete the ID of the array
     let index = intervalIds.indexOf(intervalId);
     if (index !== -1) {
         intervalIds.splice(index, 1);
@@ -116,23 +142,86 @@ function enterFullscreen(element) {
     }
 }
 
+/**
+ * Exits fullscreen mode if the browser is in fullscreen.
+ * This function checks if there is a fullscreen element and 
+ * calls the appropriate method to exit fullscreen mode.
+ * Browser prefix support is also considered.
+ */
 function exitFullscreen() {
     if (document.fullscreenElement || document.webkitIsFullScreen) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
     }
-  }
+}
 
-  function mobileTerms(id) {
-    let element = document.getElementById('mobileTerms');
-    const closeMobileTerms = id.toLowerCase().includes('close');
+/**
+ * Shows or hides the "terms" element based on the provided ID parameter.
+ * If the ID contains the term 'close', the element will be hidden and the game will be paused.
+ * Otherwise, the element will be shown and the game will also be paused.
+ *
+ * @param {string} id - The ID that determines whether the element should be shown or hidden.
+ *                      If 'close' is included in the ID, the element will be hidden.
+ */
+function terms(id) {
+    let element = document.getElementById('terms').classList;
+    const closeterms = id.toLowerCase().includes('close');
+    const showTerms = element.remove('d-none');
+    const gameStarted = checkGameStarted();
 
-    if(closeMobileTerms){
-        element.classList.add('d-none');
+    if (closeterms) {
+        element.add('d-none');
+        if(gameStarted){pauseGame();}
     } else {
-        element.classList.remove('d-none');
+        showTerms;
+        if(gameStarted && !world.gamePaused){pauseGame();}
+
     }
-  }
+}
+
+/**
+ * This function checks if the game has started and is not currently paused.
+ * If both conditions are true, it returns true. Otherwise, it returns false.
+ */
+function checkGameStarted(){
+    if(gameStarted && !world.gamePaused){
+        return true;
+    } else {
+        return false
+    }
+}
+
+/**
+ * Updates the volume button image based on the mute state.
+ */
+function updateVolumeButtonImage() {
+    const volumeBtn = document.getElementById('volumeBtn');
+    const isMuted = localStorage.getItem('soundMuted') === 'true';
+    
+    if (isMuted) {
+        audioManager.muteGameSound(true);
+        volumeBtn.style.backgroundImage = 'url(../img/control/sound-off.png)';
+    } else {
+        audioManager.muteGameSound(false);
+        volumeBtn.style.backgroundImage = 'url(../img/control/sound-on.png)';
+    }
+}
+
+/**
+ * Checks if the current device is a mobile device.
+ * @returns {boolean} True if the device is a mobile device, otherwise false.
+ */
+function isMobileDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return /mobile|android|iphone|ipad|iemobile|opera mini/i.test(userAgent);
+}
+
+function mobileController(){
+    const mobileControllerClass = document.getElementById('mobileController').classList
+    if (isMobileDevice()) {
+        mobileControllerClass.remove('d-none')
+    }
+}

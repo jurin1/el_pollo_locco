@@ -10,7 +10,7 @@ class World {
     coinStatusBar = new CoinStatusBar();
     endbossStatusBar = new EndbossStatusBar();
     throwableObject = [];
-    gamePaused;
+    gamePaused = true;
     ctx;
     canvas;
     keyboard;
@@ -21,6 +21,7 @@ class World {
     characterImmortal = false;
     isGameOver = false;
     oneItem = 10;
+
 
     /**
      * Creates an instance of the World class.
@@ -42,8 +43,8 @@ class World {
         setStoppableInterval(() => {
             this.checkCollisionsWithEnemy();
             this.checkCollisionOfBottleWithEnemy();
-            this.checkCollisionWithCollectible(this.level.bottles, this.character, "collectedBottles", this.bottleStatusBar, 'bottle_sound');
-            this.checkCollisionWithCollectible(this.level.coins, this.character, "collectedCoins", this.coinStatusBar, 'coin_sound');
+            this.checkCollisionWithCollectible(this.level.bottles, this.character, "collectedBottles", this.bottleStatusBar, 'bottleSound', 0.2);
+            this.checkCollisionWithCollectible(this.level.coins, this.character, "collectedCoins", this.coinStatusBar, 'coinSound', 0.5);
             this.throwBottle();
             this.checkForEndOfGame();
             this.bottleStatusBar.setPercentage(this.bottleStatusBar.percentage);
@@ -78,7 +79,7 @@ class World {
         this.throwableObject.push(bottle);
         this.character.collectedBottles -= this.oneItem;
         this.bottleStatusBar.percentage -= this.oneItem;
-        this.audioManager.playAudio('throw_sound');
+        this.audioManager.playAudio('throwSound');
         this.throwCooldown = this.throwDelay;
     }
 
@@ -150,7 +151,7 @@ class World {
      */
     enemyHitsCharacter() {
         this.character.hit(true);
-        this.audioManager.playAudio('hurt_sound');
+        this.audioManager.playAudio('characterHurtSound');
         this.statusBar.setPercentage(this.character.energy);
         this.setImmortalTimer();
     }
@@ -239,21 +240,22 @@ class World {
      * Checks for the end of the game.
      */
     checkForEndOfGame() {
-        if (!this.checkIfEndboss()) this.gameOver('win_sound');
-        if (this.character.energy == 0) this.gameOver('gameOver_sound');
+        if (!this.checkIfEndboss()) this.gameOver('winSound', 1, imgWin);
+        if (this.character.energy == 0) this.gameOver('gameOverSound', 0.6, imgLose);
     }
 
     /**
      * Handles the end of the game.
      * @param {string} sound - The sound to play at the end of the game.
+     * @param {string} volume - The volume of the sound.
+     * @param {string} imgSrc - Different Image if the game is over.
      */
-    gameOver(sound) {
-        setTimeout(() => {
-            stopGame();
-            this.audioManager.playAudio(sound);
-            this.isGameOver = true;
-            stopAllIntervals();
-        }, 1000);
+    gameOver(sound, volume, imgScr) {
+        stopAllIntervals();
+        stopGame(imgScr);
+        this.audioManager.playAudio(sound, volume);
+        this.isGameOver = true;
+
     }
 
     /**
@@ -276,7 +278,7 @@ class World {
      * Plays the breaking glass sound.
      */
     breakingGlassSound() {
-        this.audioManager.playAudio('breaking_glass_sound');
+        this.audioManager.playAudio('breakingGlassSound');
     }
 
     /**
@@ -294,11 +296,12 @@ class World {
      * @param {string} countPropertyName - The property name for the collected count.
      * @param {Object} statusBar - The status bar to update.
      * @param {string} sound - The sound to play upon collection.
+     * @param {string} volume - The volume of the sound.
      */
-    checkCollisionWithCollectible(collectibles, character, countPropertyName, statusBar, sound) {
+    checkCollisionWithCollectible(collectibles, character, countPropertyName, statusBar, sound, volume) {
         collectibles.forEach((collectible, index) => {
             if (this.isCharacterCollidingWithCollectable(collectible)) {
-                this.collectItem(collectibles, index, character, countPropertyName, statusBar, sound);
+                this.collectItem(collectibles, index, character, countPropertyName, statusBar, sound, volume);
             }
         });
     }
@@ -320,13 +323,14 @@ class World {
      * @param {string} countPropertyName - The property name for the collected count.
      * @param {Object} statusBar - The status bar to update.
      * @param {string} sound - The sound to play upon collection.
+     * @param {string} volume - The volume of the sound.
      */
-    collectItem(collectibles, index, character, countPropertyName, statusBar, sound) {
+    collectItem(collectibles, index, character, countPropertyName, statusBar, sound, volume) {
         if (character[countPropertyName] < 100) {
             collectibles.splice(index, 1);
             character[countPropertyName] += this.oneItem;
             statusBar.setPercentage(character[countPropertyName]);
-            if (sound) this.audioManager.playAudio(sound, 1);
+            if (sound) this.audioManager.playAudio(sound, volume);
         }
     }
 

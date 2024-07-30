@@ -129,8 +129,7 @@ class World {
     characterHitsEnemy(enemy) {
         enemy.energy--;
         enemy.hit();
-        this.endbossStatusBar.decreaseEnergyOfEndbossStatusBar(enemy);
-        this.character.jump();
+          this.character.jump();
         if (enemy.energy <= 0) {
             this.deleteEnemy(enemy);
             this.chickenSound(enemy);
@@ -255,7 +254,6 @@ class World {
         stopGame(imgScr);
         this.audioManager.playAudio(sound, volume);
         this.isGameOver = true;
-
     }
 
     /**

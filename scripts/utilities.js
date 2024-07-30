@@ -86,21 +86,11 @@ function setStoppableInterval(fn, time) {
     intervalIds.push(id);
 }
 
-function stopInterval(intervalId) {
-    clearInterval(intervalId); // stop the interval until the array
-    // delete the ID of the array
-    let index = intervalIds.indexOf(intervalId);
-    if (index !== -1) {
-        intervalIds.splice(index, 1);
-    }
-}
-
 /**
  * Stops all intervals that were created using setStoppableInterval.
  */
-function stopAllIntervals() {
-    intervalIds.forEach(stopInterval); // Iteriere über alle Intervall-IDs und stoppe sie
-    intervalIds = []; // Lösche das Array der Intervall-IDs
+async function stopAllIntervals() {
+    intervalIds.forEach(clearInterval); // Iteriere über alle Intervall-IDs und stoppe sie
 }
 
 
@@ -219,9 +209,32 @@ function isMobileDevice() {
     return /mobile|android|iphone|ipad|iemobile|opera mini/i.test(userAgent);
 }
 
-function mobileController(){
-    const mobileControllerClass = document.getElementById('mobileController').classList
-    if (isMobileDevice()) {
-        mobileControllerClass.remove('d-none')
+/**
+ * Displays the mobile controller by removing the 'd-none' class from it.
+ * This function is intended to make the mobile controller visible.
+ */
+function showMobileController() {
+    document.getElementById('mobileController').classList.remove('d-none');
+}
+
+/**
+ * Handles the window resize event to check if the device is a mobile device
+ * and displays or hides the mobile controller accordingly.
+ * This function is called whenever the window is resized.
+ *
+ * @listens window#resize
+ */
+function handleResize() {
+    if (isMobileDevice() && !world.isGameOver) {
+        showMobileController();
+    } else {
+        const mobileController = document.getElementById('mobileController');
+        if (mobileController) {
+            mobileController.classList.add('d-none');
+        }
     }
 }
+
+// Add an event listener to the window resize event
+window.addEventListener('resize', handleResize);
+

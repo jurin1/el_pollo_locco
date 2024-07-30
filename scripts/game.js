@@ -32,7 +32,8 @@ const touchMap = {
  * @param {boolean} newStart - Indicates if the game should be restarted.
  */
 async function loadGame(newStart) {
-    if (newStart) resetGame();
+    await stopAllIntervals();
+    if (newStart) restartGame();
     await generateHTML();
     initLevel();
     initCanvas();
@@ -41,7 +42,7 @@ async function loadGame(newStart) {
 /**
  * Initializes the canvas and world objects.
  */
-function initCanvas() {
+async function initCanvas() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
@@ -65,7 +66,22 @@ async function startGame() {
     toggleDisplay('loadingScreen'); 
     toggleDisplay('canvasContainer'); 
     updateVolumeButtonImage();
-    mobileController();
+    isMobileDevice() &&  showMobileController();
+}
+
+
+/**
+ * Resets the game by clearing the canvas and world objects and resetting the game state.
+ */
+async function restartGame(){
+    audioManager.pauseAllAudios(true);
+    canvas = null;
+    world = null;
+    gameStarted = false;
+    isGameOver = false;
+    document.getElementById('gameOver').classList.add('d-none');
+    await initCanvas();
+    await startGame()
 }
 
 /**
@@ -108,9 +124,9 @@ function togglePause(pause, imgPath) {
  * Stops the game and displays the game over screen.
  */
 function stopGame(imgSrc) {
-    const gameOver = document.getElementById('gameOver');
-    gameOver.classList.remove('d-none');
-    gameOver.innerHTML += `<img class="gameOverImg" src="${imgSrc}" />`;  // Korrektur hier
+    const gameOver = document.getElementById('gameOverScreen');
+    document.getElementById('gameOver').classList.remove('d-none');
+    gameOver.innerHTML = `<img class="gameOverImg" src="${imgSrc}" />`;  
     setMusic();
 }
 
@@ -144,15 +160,6 @@ function muteSound() {
     let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
     localStorage.setItem('soundMuted', !soundMuted);
     updateVolumeButtonImage();
-}
-
-/**
- * Resets the game by clearing the canvas and world objects and resetting the game state.
- */
-function resetGame() {
-    canvas = null;
-    world = null;
-    gameStarted = false;
 }
 
 
@@ -204,5 +211,6 @@ function mobileControllerEnd(id) {
     event.preventDefault();
 }
 
-
-
+async function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+  }

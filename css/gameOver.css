@@ -12,13 +12,12 @@
 }
 
 .restartBtn {
-    width: fit-content;
-    position: absolute;
-    left: 50%;
+    position: relative;
+    left: 35%;
     transform: translateX(-50%);
-    bottom: 50px;
-    padding: 5px 10px;
+    bottom: 80px;
     width: fit-content;
+    padding: 5px 10px;
     height: 40px;
     background-color: #FF9601;
     border: none;
@@ -29,6 +28,7 @@
     cursor: pointer;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
+
 
 .restartBtn:hover {
     background-color: #e88904;

@@ -1,5 +1,4 @@
-
-@media (max-width: 800px) {
+@media (max-width: 666px) {
 
     #gameScreen {
         display: none;
@@ -34,9 +33,6 @@
         display: none;
     }
 
-    footer {
-        display: none;
-    }
     canvas {
         height: 100vh;
         width: 100vw;

@@ -205,6 +205,7 @@ class Character extends MovableObject {
     animateCharacter() {
         if (!world.gamePaused) {
             this.updateStartTime();
+            this.playAnimation(this.IMAGES_IDLE);
             if (this.isDead()) {
                 this.handleDeadState();
             } else if (this.isHurt()) {
@@ -215,6 +216,7 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             } else if (this.checkIfCharacterIsWaiting()) {
                 this.playAnimation(this.IMAGES_IDLE_LONG);
+                this.audioManager.playAudio('snoring', 1);
             }
         }
     }
@@ -326,7 +328,7 @@ class Character extends MovableObject {
      * @returns {boolean} True if the character is waiting, false otherwise.
      */
     checkIfCharacterIsWaiting() {
-        return this.startTime <= 0;
+        return this.startTime <= 0 ? true : this.audioManager.pauseAudio('snoring');
     }
 
     /**

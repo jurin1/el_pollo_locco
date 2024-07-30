@@ -16,7 +16,9 @@ function createHtmlForGame() {
             <div id="gameInfoContainer" class="d-none infoWindowStyle" onclick="controllerInfo('gameInfoContainer')"></div>
         </div>
         <div id="gameOver" class="d-none">
-            <button onclick="reloadPage()" class="restartBtn">Back to menu</button>
+                <img id="gameOverScreen" class="gameOverImg" src="./img/9_intro_outro_screens/game_over/game_over.png">
+                <button onclick="startGame()" class="restartBtn">Restart the game</button>
+                <button onclick="reloadPage()" class="restartBtn">Back to menu</button>
         </div>
         <div id="canvasContainer" class="d-none fade">
             <div id="ingameControl">

@@ -30,6 +30,7 @@ class AudioManager {
             { name: 'walkingSound', src: 'audio/running.mp3' },
             { name: 'jumpSound', src: 'audio/jump.mp3' },
             { name: 'throwSound', src: 'audio/throw.mp3' },
+            { name: 'snoring', src: '/audio/snoring.mp3' },
             { name: 'bottleSound', src: 'audio/bottle.mp3' },
             { name: 'breakingGlassSound', src: 'audio/glass.mp3' },
             { name: 'characterHurtSound', src: 'audio/pain.mp3' },
@@ -94,12 +95,17 @@ class AudioManager {
      * Pauses all currently playing audio.
      * @public
      */
-    pauseAllAudios() {
+    pauseAllAudios(restartGame) {
         this.audios.forEach(audio => {
-            audio.audio.pause();
+            if(restartGame) {
+                audio.audio.pause();
+            audio.audio.currentTime=0;
+            }
+         else {audio.audio.pause()}
         });
     }
-  
+
+ 
     /**
      * Checks if the sound is muted.
      * @returns {boolean} True if the sound is muted, false otherwise.

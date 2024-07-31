@@ -90,7 +90,11 @@ function setStoppableInterval(fn, time) {
  * Stops all intervals that were created using setStoppableInterval.
  */
 async function stopAllIntervals() {
-    intervalIds.forEach(clearInterval); // Iteriere über alle Intervall-IDs und stoppe sie
+    // intervalIds.forEach(clearInterval); // Iteriere über alle Intervall-IDs und stoppe sie
+    for (let i = intervalIds.length - 1; i >= 0; i--) {
+        clearInterval(intervalIds[i]);
+      }
+      intervalIds = [];
 }
 
 
@@ -206,16 +210,22 @@ function updateVolumeButtonImage() {
  */
 function isMobileDevice() {
     const userAgent = navigator.userAgent.toLowerCase();
-    return /mobile|android|iphone|ipad|iemobile|opera mini/i.test(userAgent);
-}
+    return /mobile|android|iphone|ipad|iemobile|opera mini|touch|smartphone|tablet/i.test(userAgent) &&
+           !/windows nt|mac os x/i.test(userAgent);
+  }
 
 /**
  * Displays the mobile controller by removing the 'd-none' class from it.
  * This function is intended to make the mobile controller visible.
  */
-function showMobileController() {
-    document.getElementById('mobileController').classList.remove('d-none');
-}
+function showMobileController(showController) {
+    const mobileController = document.getElementById('mobileController');
+    if (showController) {
+      mobileController.classList.remove('d-none');
+    } else {
+      mobileController.classList.add('d-none');
+    }
+  }
 
 /**
  * Handles the window resize event to check if the device is a mobile device
@@ -226,12 +236,9 @@ function showMobileController() {
  */
 function handleResize() {
     if (isMobileDevice() && !world.isGameOver) {
-        showMobileController();
+        showMobileController(true);
     } else {
-        const mobileController = document.getElementById('mobileController');
-        if (mobileController) {
-            mobileController.classList.add('d-none');
-        }
+        showMobileController(false)
     }
 }
 

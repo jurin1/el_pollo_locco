@@ -31,10 +31,9 @@ const touchMap = {
  * Loads the game, optionally restarting it.
  * @param {boolean} newStart - Indicates if the game should be restarted.
  */
-async function loadGame(newStart) {
-    await stopAllIntervals();
-    if (newStart) restartGame();
-    await generateHTML();
+async function loadGame() {
+    const restartData = await restartGame();
+    await generateHTML(restartData);
     initLevel();
     initCanvas();
 }
@@ -50,8 +49,10 @@ async function initCanvas() {
 /**
  * Generates the HTML for the game screen.
  */
-async function generateHTML() {
-    document.getElementById('gameScreen').innerHTML = createHtmlForGame();
+async function generateHTML(restart) {
+    document.getElementById('gameScreen').innerHTML = await createHtmlForGame();
+
+    restart && startGame();
 }
 
 /**
@@ -66,31 +67,25 @@ async function startGame() {
     toggleDisplay('loadingScreen'); 
     toggleDisplay('canvasContainer'); 
     updateVolumeButtonImage();
-    isMobileDevice() &&  showMobileController();
+    isMobileDevice() &&  showMobileController(true);
 }
 
 
 /**
  * Resets the game by clearing the canvas and world objects and resetting the game state.
  */
-async function restartGame(){
-    audioManager.pauseAllAudios(true);
-    canvas = null;
-    world = null;
-    gameStarted = false;
-    isGameOver = false;
-    document.getElementById('gameOver').classList.add('d-none');
-    await initCanvas();
-    await startGame()
-}
-
+async function restartGame() {
+    const restartData = JSON.parse(sessionStorage.getItem('restart'));
+    sessionStorage.setItem('restart', JSON.stringify(false))
+    return restartData;
+  }
 /**
  * Handles the game loading process by pausing the game,
  * displaying the loading bar, and resuming the game after loading is complete.
  */
 async function loadingGame(){
     gameStarted = true;
-    world.gamePaused = true
+    //world.gamePaused = true
     await loadingBar();
     world.gamePaused = false
 }
@@ -128,6 +123,7 @@ function stopGame(imgSrc) {
     document.getElementById('gameOver').classList.remove('d-none');
     gameOver.innerHTML = `<img class="gameOverImg" src="${imgSrc}" />`;  
     setMusic();
+    showMobileController(false)
 }
 
 /**
@@ -182,8 +178,8 @@ window.addEventListener('keyup', (e) => {
 
 
 // Reload the page after the game is over
-function reloadPage(){
-    window.location.reload();
+function reloadPage(restart){
+    restart ? sessionStorage.setItem('restart', JSON.stringify(restart)) + window.location.reload() : window.location.reload();
 };
 
 
